@@ -21,6 +21,13 @@ test('build a NRPN sequence with an adjustment value', () => {
   expect(sequence).toEqual(expected);
 });
 
+test('build a NRPN sequence with an adjustment value of zero', () => {
+  const expected = new Uint8Array([0xB0, 0x63, 2, 0xB0, 0x62, 63, 0xB0, 0x06, 1, 0xB0, 0x26, 0]);
+  const sequence = nrpn(2, 63, 1, 0);
+
+  expect(sequence).toEqual(expected);
+});
+
 test('build a sysex sequence', () => {
   const expected = new Uint8Array([0xF0, 0x7F, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00, 0xF7]);
   const sequence = sysex([0x7F, 0x40, 0x00, 0x00, 0x00, 0x00, 0x00]);

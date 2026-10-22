@@ -2,10 +2,10 @@ import React from 'react';
 
 function Intro() {
     return (
-        <header>
-            <h1>Mininova web editor</h1>
-            <p>Control your Novation Mininova synth from your web browser</p>
-        </header>
+        <div className="intro">
+            <h1>MiniNova <span>web editor</span></h1>
+            <p>Control your Novation MiniNova synth from your web browser</p>
+        </div>
     );
 }
 

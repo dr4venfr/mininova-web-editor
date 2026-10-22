@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Controls, DeviceSetup, Intro } from './components';
 import { Command, CommandType, getCommand } from './midi.command';
 import { findControl, isPatch, loadPatch, selectPatch } from './mininova';
-import { debugMidiMessage } from './debug';
+import { debugMidiMessage, noDevice } from './debug';
 import { DeviceInput, DeviceOutput, MidiMessage } from './ports';
 import { patchControlChanged, patchDumpReceived } from './redux/patch';
 
@@ -21,6 +21,7 @@ function App() {
   const [debug, setDebug] = useState<boolean>(false);
   const previousCommandRef = useRef<Command>({ type: CommandType.None, values: [] });
   const dispatch = useDispatch();
+  const connected = output.id !== noDevice.id;
 
   const onIncomingMidiMessage = useCallback((message: MidiMessage) => {
     const decodePatch = (data: Uint8Array) => {
@@ -56,19 +57,21 @@ function App() {
     }
   }, [debug, dispatch]);
 
-  const emit = (message: Uint8Array) => {
+  const send = useCallback((device: DeviceOutput | null, message: Uint8Array) => {
     if (debug) {
       debugMidiMessage(message, 'Output: ');
     }
-    if (!output) {
+    if (!device) {
       return;
     }
-    output.send(message);
-  };
+    device.send(message);
+  }, [debug]);
 
-  const onChangeOutput = () => selectPatch(emit);
+  const emit = useCallback((message: Uint8Array) => send(output, message), [output, send]);
 
-  const memoizedEmit = useCallback(emit, [output, debug]);
+  // The newly selected device is passed explicitly: `output` from this render
+  // still refers to the previous device until the store update re-renders App
+  const onChangeOutput = (device: DeviceOutput) => selectPatch((message: Uint8Array) => send(device, message));
 
   // Update the MIDI input listener when debug state changes
   useEffect(() => {
@@ -78,31 +81,37 @@ function App() {
   }, [input, debug, onIncomingMidiMessage]);
 
   useEffect(() => {
-    memoizedEmit(loadPatch);
-  }, [currentPatch, memoizedEmit]);
+    emit(loadPatch);
+  }, [currentPatch, emit]);
 
   return (
-    <div>
-      <Intro />
-      <h3>Setup</h3>
-      <DeviceSetup
-        onChangeOutput={onChangeOutput}
-        onIncomingMidiMessage={onIncomingMidiMessage}
-        input={input}
-        output={output}
-      />
-      <div className="debug">
-        <label>
-          <input type="checkbox" checked={debug} onChange={() => setDebug(!debug)} />
-          Debug {debug ? 'on' : 'off'}
-        </label>
-      </div>
+    <div className="app">
+      <header className="app-header">
+        <Intro />
+        <div className="setup">
+          <span className={`status ${connected ? 'status-on' : ''}`}>
+            {connected ? output.name || 'Connected' : 'No device'}
+          </span>
+          <DeviceSetup
+            onChangeOutput={onChangeOutput}
+            onIncomingMidiMessage={onIncomingMidiMessage}
+            input={input}
+            output={output}
+          />
+          <label className="debug">
+            <input type="checkbox" checked={debug} onChange={() => setDebug(!debug)} />
+            Debug
+          </label>
+        </div>
+      </header>
       <Controls
         currentPatch={currentPatch}
         emit={emit}
       />
-      <p><a href="https://github.com/nclavaud/mininova-web-editor/">Contribute on GitHub</a></p>
-      <p>Last update: {process.env.REACT_APP_BUILD_DATE}</p>
+      <footer className="app-footer">
+        <a href="https://github.com/nclavaud/mininova-web-editor/">Contribute on GitHub</a>
+        <span>Last update: {__BUILD_DATE__}</span>
+      </footer>
     </div>
   );
 }

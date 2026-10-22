@@ -26,12 +26,13 @@ function USBDeviceSetup({
   const isSupported = useSelector((state: RootState) => state.usb.isSupported);
 
   if (!isSupported) {
+    // MIDI is the main connection: USB is only an alternative in browsers that support WebUSB
     return (
-      <div>
-        <p>It looks like your browser does not support USB.</p>
-        <p>Web USB is an experimental technology. Check the list of compatible browsers in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/USB#Browser_compatibility">Browser compatibility table </a>.</p>
-      </div>
-    )
+      <p>
+        Direct USB connection is not available in this browser (<a href="https://developer.mozilla.org/en-US/docs/Web/API/USB#browser_compatibility">WebUSB</a> is
+        only supported by Chromium-based browsers). Select the MiniNova MIDI ports below instead.
+      </p>
+    );
   }
 
   const connectToUSBDevice = async () => {

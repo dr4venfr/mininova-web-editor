@@ -3,7 +3,7 @@ It allows you to control the Novation Mininova synth from your web browser, so y
 have to deep dive into the hardware controls.
 
 This application runs in any web browser that supports the Web MIDI API specification (see the
-[list of compatible browsers](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility)
+[list of compatible browsers](https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#browser_compatibility)
 ).
 
 ## Prerequisites
@@ -14,17 +14,23 @@ To do so, copy the content of [99-novation.rules](./linux/99-novation.rules) int
 
 ## Development
 
-In the project directory, you can run:
+Requires Node.js 22.12 or later. In the project directory, you can run:
 
 ### `yarn dev`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Runs the app in development mode with [Vite](https://vite.dev).<br />
+Open [http://localhost:3000/mininova-web-editor/](http://localhost:3000/mininova-web-editor/) to view it in the browser.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The page will update as you make edits.
 
 ### `yarn test`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Runs the test suite once with [Vitest](https://vitest.dev). Use `yarn test:watch` for watch mode.
+
+### `yarn lint`
+
+Lints the code with ESLint.
+
+### `yarn build`
+
+Type-checks the code and builds the app for production into the `dist` folder.

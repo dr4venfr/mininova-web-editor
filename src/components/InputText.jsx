@@ -11,7 +11,7 @@ function InputText({ id, control, onChange, readonly, value }) {
       <label htmlFor={id} className="control-label">{control.label}</label>
       <input
         id={id}
-        className="control-input"
+        className="control-input control-text"
         onChange={onInputChange}
         value={value}
         readOnly={readonly}

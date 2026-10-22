@@ -1,5 +1,6 @@
 import React from 'react';
 import Control from './Control';
+import EnvelopeGraph from './EnvelopeGraph';
 import { controls } from '../mininova';
 
 function Row({emit, number, param}) {
@@ -41,6 +42,7 @@ function Envelope({ emit, number }) {
   return (
     <div>
       <h4>Envelope {number}</h4>
+      <EnvelopeGraph number={number} emit={emit} />
       {params.map(param => (
           <Row key={param} emit={emit} number={number} param={param}/>
       ))}

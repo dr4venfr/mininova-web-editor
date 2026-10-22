@@ -1,30 +1,20 @@
 import React from 'react';
-import Control from './Control';
-import { controls } from '../mininova';
+import ControlGroup from './ControlGroup';
+import ArpSteps from './ArpSteps';
 
-function ArpVocoder({ emit }) {
-
-  const arp = [
-    'arp-on',
-    'arp-key-latch',
-    'arp-octaves',
-    'arp-rate-sync',
-    'arp-gate',
-    'arp-mode',
-    'arp-pattern',
-    'arp-swing',
-    'arp-length',
-    'arp-step-1',
-    'arp-step-2',
-    'arp-step-3',
-    'arp-step-4',
-    'arp-step-5',
-    'arp-step-6',
-    'arp-step-7',
-    'arp-step-8'
-  ]
+const arp = [
+  'arp-on',
+  'arp-key-latch',
+  'arp-octaves',
+  'arp-rate-sync',
+  'arp-gate',
+  'arp-mode',
+  'arp-pattern',
+  'arp-swing',
+  'arp-length',
+]
  
-  const vocoder = [
+const vocoder = [
 'vocoder-level',
 'vocoder-carier-level',
 'vocoder-modulator-level',
@@ -65,9 +55,9 @@ function ArpVocoder({ emit }) {
 'vocoder-spectrum-level-31',
 'vocoder-spectrum-level-32',
 'vocoder-spectrum-resample',
-  ];
+];
 
-  const chorder = [    
+const chorder = [    
 'chorder-transpose',
 'chorder-on',
 'chorder-count',
@@ -80,9 +70,9 @@ function ArpVocoder({ emit }) {
 'chorder-key-8',
 'chorder-key-9',
 'chorder-key-10',
-  ];
+];
 
-  const vocaltune = [
+const vocaltune = [
 'vocal-tune-shift',
 'vocal-tune-bend',
 'vocal-tune-mode',
@@ -94,59 +84,22 @@ function ArpVocoder({ emit }) {
 'vocal-tune-vibrato',
 'vocal-tune-vibrato-mod-wheel',
 'vocal-tune-vibrato-rate',
-  ];
+];
 
+export function Arp({ emit }) {
   return (
-    <div>
-    <div className="rows">
-      <div>
-        <h4>Arp</h4>
-        {arp.map(id => (
-          <Control
-            key={id}
-            id={id}
-            control={controls[id]}
-            emit={emit}
-          />
-        ))}
-      </div>
-      <div>
-        <h4>Vocoder</h4>
-        {vocoder.map(id => (
-          <Control
-            key={id}
-            id={id}
-            control={controls[id]}
-            emit={emit}
-          />
-        ))}
-      </div>
-      <div>
-        <h4>Chorder</h4>
-        {chorder.map(id => (
-          <Control
-            key={id}
-            id={id}
-            control={controls[id]}
-            emit={emit}
-          />
-        ))}
-      </div>
-      <div>
-        <h4>Vocal Tune</h4>
-        {vocaltune.map(id => (
-          <Control
-            key={id}
-            id={id}
-            control={controls[id]}
-            emit={emit}
-          />
-        ))}
-      </div>
-
-    </div>
-    </div>
+    <ControlGroup title="Arp" ids={arp} emit={emit}>
+      <ArpSteps emit={emit} />
+    </ControlGroup>
   );
 }
 
-export default ArpVocoder;
+export function Vocoder({ emit }) {
+  return (
+    <div className="rows">
+      <ControlGroup title="Vocoder" ids={vocoder} emit={emit} />
+      <ControlGroup title="Chorder" ids={chorder} emit={emit} />
+      <ControlGroup title="Vocal Tune" ids={vocaltune} emit={emit} />
+    </div>
+  );
+}

@@ -848,7 +848,7 @@ export const controls = {
       enum: ['Off', 'On'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 42,
+      init: 0,
       mapFrom: [
         [0, 122, [42, 43]],
       ],
@@ -860,7 +860,7 @@ export const controls = {
       type: CommandType.NRPN,
       enum: ['Off', 'On'],
       range: [0,127],
-      init: 44,
+      init: 0,
       mapFrom: [
         [0, 122, [44, 45]],
       ],
@@ -1088,7 +1088,7 @@ export const controls = {
     label: 'Sustain Time',
     type: CommandType.ControlChange,
     range: [0,127],
-    init: 0,
+    init: 127,
     msg: _cc(110),
     mapFrom: [110,[0,127]],
     decode: decodeCC
@@ -1209,7 +1209,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 2,
+      init: 0,
       mapFrom: [
         [0, 122, [2, 3]],
       ],
@@ -1242,7 +1242,7 @@ export const controls = {
     label: "Sustain Time",
     type: CommandType.NRPN,
     range: [0,127],
-    init: 0,
+    init: 127,
     mapFrom: [
       [0, 6, [0, 127]],
     ],
@@ -1306,7 +1306,7 @@ export const controls = {
     msg: x => nrpn(0, 11, x&127),
   },
   'env-2-decay-slope': {
-    label: "Attack Slope",
+    label: "Decay Slope",
     type: CommandType.NRPN,
     range: [0,127],
     init: 0,
@@ -1390,7 +1390,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 2,
+      init: 0,
       mapFrom: [
         [0, 122, [4, 5]],
       ],
@@ -1412,7 +1412,7 @@ export const controls = {
     label: "Sustain Time",
     type: CommandType.NRPN,
     range: [0,127],
-    init: 0,
+    init: 127,
     mapFrom: [
       [0, 20, [0, 127]],
     ],
@@ -1476,7 +1476,7 @@ export const controls = {
     msg: x => nrpn(0, 25, x&127),
   },
   'env-3-decay-slope': {
-    label: "Attack Slope",
+    label: "Decay Slope",
     type: CommandType.NRPN,
     range: [0,127],
     init: 0,
@@ -1560,7 +1560,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 2,
+      init: 0,
       mapFrom: [
         [0, 122, [6, 7]],
       ],
@@ -1582,7 +1582,7 @@ export const controls = {
     label: "Sustain Time",
     type: CommandType.NRPN,
     range: [0,127],
-    init: 0,
+    init: 127,
     mapFrom: [
       [0, 34, [0, 127]],
     ],
@@ -1646,7 +1646,7 @@ export const controls = {
     msg: x => nrpn(0, 39, x&127),
   },
   'env-4-decay-slope': {
-    label: "Attack Slope",
+    label: "Decay Slope",
     type: CommandType.NRPN,
     range: [0,127],
     init: 0,
@@ -1728,7 +1728,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 2,
+      init: 0,
       mapFrom: [
         [0, 122, [8, 9]],
       ],
@@ -1750,7 +1750,7 @@ export const controls = {
     label: "Sustain Time",
     type: CommandType.NRPN,
     range: [0,127],
-    init: 0,
+    init: 127,
     mapFrom: [
       [0, 48, [0, 127]],
     ],
@@ -1814,7 +1814,7 @@ export const controls = {
     msg: x => nrpn(0, 53, x&127),
   },
   'env-5-decay-slope': {
-    label: "Attack Slope",
+    label: "Decay Slope",
     type: CommandType.NRPN,
     range: [0,127],
     init: 0,
@@ -1838,7 +1838,7 @@ export const controls = {
   },
 
   'env-6-delay': {
-    label: "Attack",
+    label: "Delay",
     type: CommandType.NRPN,
     range: [0,127],
     init: 0,
@@ -1898,7 +1898,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 2,
+      init: 0,
       mapFrom: [
         [0, 122, [10, 11]],
       ],
@@ -1920,7 +1920,7 @@ export const controls = {
     label: "Sustain Time",
     type: CommandType.NRPN,
     range: [0,127],
-    init: 0,
+    init: 127,
     mapFrom: [
       [0, 62, [0, 127]],
     ],
@@ -1984,7 +1984,7 @@ export const controls = {
     msg: x => nrpn(0, 67, x&127),
   },
   'env-6-decay-slope': {
-    label: "Attack Slope",
+    label: "Decay Slope",
     type: CommandType.NRPN,
     range: [0,127],
     init: 0,
@@ -2093,7 +2093,7 @@ export const controls = {
       enum: ['Normal', 'OneShot'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 12,
+      init: 0,
       mapFrom: [
         [0, 122, [12, 13]],
       ],
@@ -2105,7 +2105,7 @@ export const controls = {
       enum: ['Freerun', 'KeySync'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 14,
+      init: 0,
       mapFrom: [
         [0, 122, [14, 15]],
       ],
@@ -2117,7 +2117,7 @@ export const controls = {
       enum: ['Normal', 'Common'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 16,
+      init: 0,
       mapFrom: [
         [0, 122, [16, 17]],
       ],
@@ -2129,7 +2129,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 18,
+      init: 0,
       mapFrom: [
         [0, 122, [18, 19]],
       ],
@@ -2235,7 +2235,7 @@ export const controls = {
       enum: ['Normal', 'OneShot'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 12,
+      init: 0,
       mapFrom: [
         [0, 122, [22, 23]],
       ],
@@ -2247,7 +2247,7 @@ export const controls = {
       enum: ['Freerun', 'KeySync'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 14,
+      init: 0,
       mapFrom: [
         [0, 122, [24, 25]],
       ],
@@ -2259,7 +2259,7 @@ export const controls = {
       enum: ['Normal', 'Common'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 16,
+      init: 0,
       mapFrom: [
         [0, 122, [26, 27]],
       ],
@@ -2271,7 +2271,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 18,
+      init: 0,
       mapFrom: [
         [0, 122, [28, 29]],
       ],
@@ -2283,7 +2283,7 @@ export const controls = {
       enum: ['Fade In', 'Fade Out', 'Gate In', 'Gate Out'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 18,
+      init: 0,
       mapFrom: [
         [0, 123, [4, 7]],
       ],
@@ -2377,7 +2377,7 @@ export const controls = {
       enum: ['Normal', 'OneShot'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 12,
+      init: 0,
       mapFrom: [
         [0, 122, [32, 33]],
       ],
@@ -2389,7 +2389,7 @@ export const controls = {
       enum: ['Freerun', 'KeySync'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 14,
+      init: 0,
       mapFrom: [
         [0, 122, [34, 35]],
       ],
@@ -2401,7 +2401,7 @@ export const controls = {
       enum: ['Normal', 'Common'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 16,
+      init: 0,
       mapFrom: [
         [0, 122, [36, 37]],
       ],
@@ -2413,7 +2413,7 @@ export const controls = {
       enum: ['Single', 'Multi'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 18,
+      init: 0,
       mapFrom: [
         [0, 122, [38, 39]],
       ],
@@ -2674,7 +2674,7 @@ export const controls = {
       msg: x => nrpn(0, 110, (x)&127),
   },
   'compres-1-treshold': {
-    label: "Treble Level",
+    label: "Threshold",
     type: CommandType.NRPN,
     range: [-60,0],
     init: 0,
@@ -2742,7 +2742,7 @@ export const controls = {
       msg: x => nrpn(0, 116, (x)&127),
   },
   'compres-2-treshold': {
-    label: "Treble Level",
+    label: "Threshold",
     type: CommandType.NRPN,
     range: [-60,0],
     init: 0,
@@ -3353,7 +3353,7 @@ export const controls = {
       enum: ['Off', 'on'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 52,
+      init: 0,
       mapFrom: [
         [0, 122, [52, 53]],
       ],
@@ -3365,7 +3365,7 @@ export const controls = {
       enum: ['Freerun', 'KeySync'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 54,
+      init: 0,
       mapFrom: [
         [0, 122, [54, 55]],
       ],
@@ -3377,7 +3377,7 @@ export const controls = {
       enum: ['Off', 'On'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 56,
+      init: 0,
       mapFrom: [
         [0, 122, [56, 57]],
       ],
@@ -3830,7 +3830,7 @@ export const controls = {
       enum: ['Off', 'On'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 46,
+      init: 0,
       mapFrom: [
         [0, 122, [46, 47]],
       ],
@@ -3842,7 +3842,7 @@ export const controls = {
       enum: ['Off', 'On'],
       type: CommandType.NRPN,
       range: [0,127],
-      init: 50,
+      init: 0,
       mapFrom: [
         [0, 122, [50, 51]],
       ],
@@ -3953,7 +3953,7 @@ export const controls = {
       label: 'Length',
       type: CommandType.NRPN,
       range: [2,8],
-      init: 1,
+      init: 8,
       mapFrom: [
         [60, 40, [2, 8]],
       ],
@@ -5952,6 +5952,12 @@ export const controls = {
 };
 
 
+
+// Build the MIDI message for a control from its UI value
+export const controlMessage = (control, value) => {
+  const offset = control.hasOwnProperty('offset') ? control.offset : 0;
+  return control.msg(value - offset);
+};
 
 const inRange = (x, [min, max]) => x >= min && x <= max;
 

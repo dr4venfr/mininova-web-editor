@@ -8,7 +8,7 @@ import { midiDevicesDetected } from '../redux/midi';
 import { deviceInputSelected, deviceOutputSelected } from '../redux/device';
 
 type MIDIDeviceSetupProps = {
-  onChangeOutput: () => {},
+  onChangeOutput: (device: DeviceOutput) => void,
   onIncomingMidiMessage: (message: MidiMessage) => void,
   input: DeviceInput,
   output: DeviceOutput,
@@ -39,8 +39,8 @@ function MIDIDeviceSetup({
     const device = findDeviceById<DeviceOutput>(id, availableOutputs);
     if (device !== null) {
       dispatch(deviceOutputSelected(device));
+      onChangeOutput(device);
     }
-    onChangeOutput();
   };
 
   const selectInput = (id: string) => {
@@ -79,7 +79,7 @@ function MIDIDeviceSetup({
     return (
       <div>
         <p>It looks like your browser does not support MIDI.</p>
-        <p>MIDI access is an experimental technology. Check the list of compatible browsers in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#Browser_compatibility">Browser compatibility table </a>.</p>
+        <p>MIDI access is an experimental technology. Check the list of compatible browsers in the <a href="https://developer.mozilla.org/en-US/docs/Web/API/MIDIAccess#browser_compatibility">Browser compatibility table </a>.</p>
       </div>
     );
   }
@@ -90,23 +90,25 @@ function MIDIDeviceSetup({
 
   return (
     <div>
-      <p>Available devices:</p>
-      <ul>
+      <p>Available MIDI ports:</p>
+      <ul className="device-list">
         {availableInputs.map(device => (
           <li key={device.id}>
-            IN {device.name}
+            <span className="device-direction">IN</span>
+            <span className="device-name">{device.name}</span>
             {input && device.id === input.id
-              ? ' (selected)'
-              : <button onClick={() => selectInput(device.id)}>select</button>
+              ? <span className="device-selected">Selected</span>
+              : <button onClick={() => selectInput(device.id)}>Select</button>
             }
           </li>
         ))}
         {availableOutputs.map(device => (
           <li key={device.id}>
-            OUT {device.name}
+            <span className="device-direction">OUT</span>
+            <span className="device-name">{device.name}</span>
             {output && device.id === output.id
-              ? ' (selected)'
-              : <button onClick={() => selectOutput(device.id)}>select</button>
+              ? <span className="device-selected">Selected</span>
+              : <button onClick={() => selectOutput(device.id)}>Select</button>
             }
           </li>
         ))}

@@ -42,7 +42,7 @@ export const patchDumpReceived = data => (
   }
 );
 
-const initialState = [];
+const initialState = {};
 for (let [id, control] of Object.entries(controls)) {
   initialState[id] = control.init;
 }
@@ -107,7 +107,7 @@ export const reducer = (state = initialState, action) => {
         'filter-routing': action.payload.data[86],
         'filter-balance': action.payload.data[87]-64,
         'filter-freqlink':action.payload.data[88]&1,
-        'filter-reslink': action.payload.data[88]&1-1,
+        'filter-reslink': (action.payload.data[88]>>1)&1,
         'filter-1-drive': action.payload.data[89],
         'filter-1-drive-type': action.payload.data[90],
         'filter-1-type': action.payload.data[91],
@@ -258,7 +258,7 @@ export const reducer = (state = initialState, action) => {
         'lfo-3-key-sync': (action.payload.data[225]&2) > 0 ? 1 : 0,
         'lfo-3-common-sync': (action.payload.data[225]&4) > 0 ? 1 : 0,
         'lfo-3-delay-trigger': (action.payload.data[225]&8) > 0 ? 1 : 0,
-        'lfo-3-fade-mode': action.payload.data[225]>4,
+        'lfo-3-fade-mode': action.payload.data[225]>>4,
 
         'fx-pan-position': action.payload.data[105]-64,
         'fx-pan-rate': action.payload.data[106],

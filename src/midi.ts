@@ -15,7 +15,7 @@ export const nrpn = (msb: number, lsb: number, value: number, adjustment?: numbe
   _cc(NRPN_MSB, msb)
     .concat(_cc(NRPN_LSB, lsb))
     .concat(_cc(NRPN_VAL, value))
-    .concat(adjustment ? [CC, NRPN_ADJ, adjustment] : [])
+    .concat(adjustment !== undefined ? [CC, NRPN_ADJ, adjustment] : [])
 );
 
 const isValidSysexValue = (value: number) => value >= 0x00 && value <= 0x7F;

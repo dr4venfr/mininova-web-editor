@@ -2,52 +2,41 @@
   "name": "mininova-web-editor",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://nclavaud.github.io/mininova-web-editor",
   "dependencies": {
-    "@testing-library/jest-dom": "^6.9.1",
-    "@testing-library/react": "^16.3.0",
-    "@testing-library/user-event": "^14.6.1",
-    "@types/jest": "^30.0.0",
+    "ramda": "^0.32.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-redux": "^9.2.0",
+    "redux": "^5.0.1"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d dist"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/node": "^25.0.2",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/react-redux": "^7.1.20",
     "@types/w3c-web-usb": "^1.0.5",
-    "ramda": "^0.32.0",
-    "react": "^19.2.3",
-    "react-dom": "^19.2.3",
-    "react-redux": "^9.2.0",
-    "react-scripts": "^5.0.1",
-    "redux": "^5.0.1",
-    "typescript": "^5.9.3"
-  },
-  "scripts": {
-    "predev": "echo \"REACT_APP_BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" > .env.development.local",
-    "dev": "react-scripts start",
-    "prebuild": "echo \"REACT_APP_BUILD_DATE=$(date -u +'%Y-%m-%dT%H:%M:%SZ')\" > .env.production",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
-    "eject": "react-scripts eject"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
     "gh-pages": "^6.3.0",
-    "redux-devtools": "^3.7.0"
-  }
+    "globals": "^17.13.0",
+    "redux-devtools": "^3.7.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.72.0",
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
+  },
+  "type": "module"
 }
