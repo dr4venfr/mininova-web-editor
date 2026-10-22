@@ -3,7 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
-  // Served from https://nclavaud.github.io/mininova-web-editor/
+  // Served from https://dr4venfr.github.io/mininova-web-editor/
   base: '/mininova-web-editor/',
   plugins: [react()],
   define: {
