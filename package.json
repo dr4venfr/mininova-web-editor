@@ -3,11 +3,14 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@julusian/midi": "^3.8.1",
+    "@modelcontextprotocol/sdk": "^1.32.2",
     "ramda": "^0.32.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "react-redux": "^9.2.0",
-    "redux": "^5.0.1"
+    "redux": "^5.0.1",
+    "zod": "^4.6.7"
   },
   "scripts": {
     "dev": "vite",
@@ -15,10 +18,12 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:watch": "vitest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "mcp:build": "vite build --config mcp/vite.config.ts"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
+    "@types/node": "^22",
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "@types/w3c-web-usb": "^1.0.5",

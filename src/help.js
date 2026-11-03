@@ -13,8 +13,19 @@ const SYNC = 'Values are note lengths relative to the tempo (T = triplet, D = do
 const help = {
   'tempo': [14, 'Master tempo in BPM, used by everything that syncs to the clock: arpeggiator, gator, delay, chorus, pan and LFO sync. Read-only here: it follows the TEMPO knob or an external MIDI clock.'],
 
+  // Patch and voice
+  'patch-category': [9, 'Type of the patch, used by the TYPE/GENRE knob to browse patches and when saving. Doesn\'t change the sound.'],
+  'patch-genre': [9, 'Musical genre of the patch, used by the TYPE/GENRE knob to browse patches and when saving. Doesn\'t change the sound.'],
+  'voice-polyphony-mode': [21, 'Mono plays one note at a time (last note wins). Mono AG only glides when notes are played legato. Mono 2 re-triggers the envelopes on every key. Poly 1 stacks repeated notes on new voices (louder with long releases); Poly 2 reuses the same voices.'],
+  'voice-unison': [20, 'Extra voices played for each note, to thicken the sound. Each one reduces polyphony: with 4, a four-note chord nearly reaches the 18-voice limit.'],
+  'voice-unison-detune': [20, 'How much the unison voices are detuned from each other. Only has an effect when Unison is on, from the next note played.'],
+  'voice-portamento-rate': [20, 'Glide time from one note to the next: 0 = off, 115 ≈ 1 second. Best in a mono mode; unpredictable with chords. Pre-Glide must be 0 for it to work.'],
+  'voice-portamento-mode': [20, 'Shape of the glide: Expo moves fast at first then slows down near the note; Linear moves evenly.'],
+  'voice-pre-glide': [21, 'Each note starts up to an octave above (+12) or below (-12) and glides to its pitch, using the Portamento Time. Unlike portamento, it works well with chords.'],
+  'voice-keyboard-octave': [9, 'Shifts the keyboard by up to 4 octaves, like the OCTAVE buttons.'],
+
   // Oscillators
-  'osc-N-wave': [16, 'The oscillator\'s waveform: classic analogue shapes (sine, triangle, sawtooth, square, pulse and saw/pulse mixes), digital waveforms, 36 wavetables, or the audio input. With an audio input selected, the other oscillator parameters have no effect and a key must be held to hear the input.'],
+  'osc-N-wave': [16, 'The oscillator\'s waveform: classic analogue shapes (sine, triangle, sawtooth, square, PW and saw/pulse mixes), sampled digital waveforms (basses, electric pianos, clavinet, double reed, string machines, organs, FM and digital bells, digital pad), 36 wavetables or the audio inputs. Each wavetable holds 9 waveforms: Pulse Width / Wave Table index picks one, and modulating it (Mod Matrix destination ON PW/Idx) sweeps through them for evolving timbres. With an audio input selected, the other oscillator parameters have no effect and a key must be held to hear the input.'],
   'osc-N-wtint': [16, 'How smoothly a wavetable moves between its neighbouring waveforms. 127 blends them smoothly; 0 makes each step abrupt. Matters most when the wavetable index is modulated.'],
   'osc-N-pwwti': [16, 'Two jobs depending on the waveform. For pulse waveforms it sets the pulse width (centre = square wave, extremes = thin and metallic). For a wavetable it picks which of its 9 waveforms plays, in steps of about 14 values.'],
   'osc-N-vsync': [15, 'Virtual oscillator sync: a hidden oscillator retriggers this one to add harmonics. Multiples of 16 land on musical harmonics; values in between are more discordant. Great when swept by an LFO.'],
@@ -27,7 +38,7 @@ const help = {
   'osc-vibrato-depth': [16, 'Maximum vibrato depth, reached with the mod wheel fully up. Affects all oscillators and needs no LFO.'],
   'osc-vibrato-speed': [17, 'Speed of the mod-wheel vibrato, from slow (0) to very fast (127).'],
   'osc-drift': [17, 'Adds a small, controlled detuning between the oscillators, like an old analogue synth that never stays perfectly in tune.'],
-  'osc-phase': [17, 'Where in its cycle each oscillator starts when a key is pressed. 0° starts them all in step; other values add a click or edge to the attack. Free = not tied to the key press.'],
+  'osc-phase': [17, 'Where in its cycle each oscillator starts when a key is pressed, in 3° steps (0 = 0°, 119 = 357°). 0° starts them all in step; other values add a click or edge to the attack. 120 = Free, not tied to the key press.'],
   'osc-fixed-note': [17, 'Plays every key at one fixed pitch. Useful for drums and sound effects. Off = normal keyboard.'],
 
   // Mixer
@@ -36,6 +47,7 @@ const help = {
   'noise-level': [17, 'Level of the noise generator in the mix. Turn the oscillators down to hear it alone.'],
   'noise-type': [17, 'Character of the noise: White (full-range hiss) or filtered versions (High, Band, HiBand).'],
   'pre-fx-level': [17, 'Level sent from the mixer into the FX section, even if every FX slot is bypassed. Raise carefully: too much clips the effects.'],
+  'fx-wet-level': [28, 'Dry/wet mix of the FX section: how much of the effects\' output, rather than the unprocessed sound, reaches the output.'],
   'post-fx-level': [17, 'Level returned from the FX section. Set up the effects first, then raise this and Pre FX Level carefully.'],
 
   // Filters
@@ -45,7 +57,7 @@ const help = {
   'filter-reslink': [20, 'When On, both filters share the same resonance value.'],
   'filter-N-drive': [18, 'Amount of distortion added just before the filter. The filter frequency therefore shapes how much drive you hear.'],
   'filter-N-drive-type': [18, 'Character of the filter drive: Diode, Valve, Clipper, XOver, Rectify, BitsDown (lower bit depth) or RateDown (lower sample rate).'],
-  'filter-N-type': [18, 'One of 14 filter types: low-pass and high-pass with different slopes, plus band-pass types. Each removes some frequencies and keeps others, giving a different character.'],
+  'filter-N-type': [39, 'LP = low-pass (keeps the lows, darker), HP = high-pass (removes the lows, thinner), BP = band-pass (keeps a band around the frequency, nasal or vocal). The number is the slope in dB/octave: 6 is gentle, 24 is steep. LP6NoRes and HP6NoRes have no resonance. Asymmetric band-passes like BP6/\\12 have a different slope on each side (high-pass side / low-pass side).'],
   'filter-N-track': [18, 'How much the cut-off follows the notes played. 127 = moves 1:1 with pitch (an octave higher note opens the filter an octave); 0 = fixed whatever you play.'],
   'filter-N-resonance': [18, 'Boosts a narrow band around the cut-off frequency, making filter sweeps more pronounced and edgy.'],
   'filter-N-frequency': [18, 'Cut-off frequency (centre frequency for band-pass types). Sweeping it is the classic "hard to soft" synth gesture.'],
@@ -64,6 +76,7 @@ const help = {
   'env-N-ad-repeats': [22, 'Repeats the attack and decay phases before sustain, for a stuttering start. 0 = no repeats; the maximum repeats as long as the key is held.'],
   'env-N-attack-track': [22, 'Links attack time to the note\'s position on the keyboard. Positive values shorten the attack on higher notes, like a real stringed instrument.'],
   'env-N-decay-track': [22, 'Like Attack Track, but for the decay time.'],
+  'env-track-centre': [23, 'Reference note of the Level Track settings, shared by all envelopes: notes above it get a stronger envelope with a positive Level Track, notes below a weaker one. C3 = middle C.'],
   'env-N-level-track': [23, 'Makes the envelope stronger for notes above the Level Track Note and weaker below it (or the reverse with negative values). Use sparingly.'],
   'env-N-attack-slope': [22, 'Shape of the attack: 0 = linear rise; higher values rise faster at first.'],
   'env-N-decay-slope': [22, 'Shape of the decay: 0 = linear fall; higher values fall faster at first.'],
@@ -71,8 +84,8 @@ const help = {
   'env-N-delay': [24, 'Delays the start of the whole envelope after the key is pressed. 60–70 ≈ 1 second, 127 = 10 seconds.'],
 
   // LFOs
-  'lfo-N-waveform': [25, 'Shape of the LFO: sine, triangle, sawtooth, square, random, plus many preset step sequences and arpeggio-like patterns. With sequence shapes, a Mod Matrix depth of 30 or 36 keeps pitches musical.'],
-  'lfo-N-phase-offset': [25, 'Where the waveform starts when a key is pressed (0–357°). Only active when Key Sync is on.'],
+  'lfo-N-waveform': [36, 'Shape of the LFO. Sine, Triangle, Sawtooth and Square are the classic shapes. Rand S/H jumps to a random value every cycle; Time S/H jumps between minimum and maximum for random times; PianoEnv is a curved sawtooth. Seq 1–7 jump between values held for 1/16 of the cycle (step sequences); Altern 1–8 alternate between minimum and maximum for varying times. Chromat to 2511 are melodic sequences (scales, arpeggios, chord progressions): to keep them chromatic on oscillator pitch, set the Mod Matrix depth to ±30 or ±36.'],
+  'lfo-N-phase-offset': [25, 'Where the waveform starts when a key is pressed, in 3° steps (0 = 0°, 119 = 357°). Only active when Key Sync is on.'],
   'lfo-N-slew-rate': [25, 'Smooths the sharp edges of the waveform, e.g. turns a square wave\'s jumps into glides.'],
   'lfo-N-delay': [26, 'Time used by the Fade Mode: how long the LFO fades or gates in or out.'],
   'lfo-N-delay-sync': [26, `Syncs the LFO delay time to the tempo. Off = use the Delay value instead. ${SYNC}`],
@@ -85,20 +98,20 @@ const help = {
   'lfo-N-fade-mode': [26, 'What the Delay does: Fade In (modulation grows), Gate In (starts after the delay), Fade Out (modulation dies away), Gate Out (stops after the delay).'],
 
   // Mod matrix
-  'mod-N-src-N': [27, 'A modulation source (LFO, envelope, wheel, velocity, aftertouch…). The two sources of a slot are multiplied: if either is at zero there is no modulation. Direct = no source.'],
+  'mod-N-src-N': [36, 'A modulation source. ModWheel, Express (expression pedal), Velocity and Keyboard (key position) follow your playing; AftTouch only comes from external MIDI, the keyboard doesn\'t send it. LFO "+" only raises the destination; "+/-" moves it up and down. Envelopes 1–6 run on every key press (Env Amp and Env Filt also shape volume and filter). AudInEnv follows the level of the audio input. The two sources of a slot are multiplied: if either is at zero there is no modulation, so ModWheel × LFO gives modulation controlled by the wheel. Direct = no source.'],
   'mod-N-anim': [27, 'Makes an Animate pad part of this slot. Alone, the pad drives the destination; with sources set, the pad acts as a switch for them.'],
   'mod-N-depth': [27, 'Amount and direction of the modulation. Nothing happens at 0. With both sources Direct and no pad, Depth becomes a manual offset on the destination.'],
-  'mod-N-dest': [27, 'The parameter being modulated: oscillator pitch and shape, mixer levels, filter drive/frequency/resonance, LFO rates, envelope decays and more. Several slots can target the same destination; their effects add up.'],
+  'mod-N-dest': [37, 'The parameter being modulated: pitch of all or one oscillator, virtual sync, pulse width / wavetable index, hardness, mixer levels, filter drive, frequency, resonance and balance, LFO rates, Amp and Filter envelope decays, FX slot amounts, FX feedback and wet level, chorus, delay and EQ settings, pan, vocoder shift, spread and resonance, Pre FX level and VocalTune pitch shift. LFO rates and envelope decays let one modulation control another. Several slots can target the same destination; their effects add up.'],
 
   // Effects
   'fx-pan-position': [28, 'Places the dry sound in the stereo field (-64 left, +63 right). Stereo effects like reverb and chorus are added after it.'],
   'fx-pan-rate': [28, 'Speed of the auto-panner. Works best with Pan Position centred.'],
   'fx-pan-sync': [28, `Syncs the auto-panner speed to the tempo. ${SYNC}`],
   'fx-pan-mod-depth': [28, 'How wide the auto-panner swings. 0 turns auto-pan off; 127 = fully left to fully right.'],
-  'fx-routing': [28, 'How the five FX slots are chained: in series, in parallel or in mixed layouts. The guide shows a diagram for each routing.'],
-  'fx-feedback': [28, 'Feeds the output of the FX chain back into slot 1. Not every routing uses feedback.'],
+  'fx-routing': [28, 'How the five FX slots are connected. R1: all five in parallel, no feedback. R2: slot 1, then slots 2–5 in parallel. R3: 1→2, then 3, 4 and 5 in parallel. R4: 1→2→3, then 4 and 5 in parallel. R5: all five in series (1→2→3→4→5). R6: 1→2, with 3, 4 and 5 in parallel from the input. R7: 1→2→3, with 4 and 5 in parallel. R8: 1→2→3→4, with 5 in parallel. Except in R1 and R2, feedback returns from the end of the series chain to slot 1. In series, order matters: chorus into reverb, distortion before delay…'],
+  'fx-feedback': [28, 'Feeds the output of the series chain back into slot 1 (routings R3 to R8; R1 and R2 have no feedback). Creates resonant, metallic or ever-repeating textures; raise carefully.'],
   'fx-N-level': [29, 'Amount for this slot. Its meaning depends on the effect: level (EQ, compressor, chorus, gator), drive amount (distortion) or send/return (delay, reverb). EQ and Gator need 127 for full effect.'],
-  'fx-N-select': [28, 'Which effect is loaded in this slot. Each effect unit can be used in only one slot at a time.'],
+  'fx-N-select': [39, 'Which effect is loaded in this slot: EQ (3-band), Compres1–2 (compressor), Distort1–2 (overdrive), Delay1–2 (echo), Reverb1–2 (hall and room), Chorus1–4 (chorus or phaser) or Gator (rhythmic gate). Each unit can be used in only one slot at a time.'],
   'eq-bass-frequency': [29, 'Frequency below which Bass Level acts, from ~140 Hz to ~880 Hz.'],
   'eq-bass-level': [29, 'Bass cut or boost (±12 dB with the slot level at 127). 0 = flat.'],
   'eq-mid-frequency': [29, 'Centre frequency of the mid band, from 440 Hz to 2.2 kHz.'],
@@ -113,7 +126,7 @@ const help = {
   'compres-N-gain': [30, 'Extra make-up gain for heavily compressed sounds.'],
   'distort-N-type': [30, 'Distortion character: Diode, Valve, Clipper (digital overload), XOver (crossover), Rectify, BitsDown (lower bit depth) or RateDown (lower sample rate). Volume varies a lot between types.'],
   'distort-N-compensation': [30, 'Reduces the harshness of Diode and Valve distortion. No effect on other types.'],
-  'distort-N-level': [30, 'Output level of the distortion.'],
+  'distort-N-level': [30, 'Output level of the distortion, in dB (-12 to +18).'],
   'delay-N-time': [30, 'Echo time, up to about 700 ms. Changing it while a note plays bends the pitch.'],
   'delay-N-sync': [30, `Syncs the echo time to the tempo. Off = use the Time value instead. ${SYNC}`],
   'delay-N-feedback': [30, 'How much of the echo is fed back for more repeats. 0 = a single echo; 64 ≈ 5 or 6 echoes; maximum keeps repeating for a minute or more.'],
@@ -133,7 +146,7 @@ const help = {
   'gator-key-sync': [31, 'KeySync restarts the pattern on every key press; Freerun lets it run in the background.'],
   'gator-key-latch': [31, 'When on, a key press keeps the gated note sounding until Latch is switched off.'],
   'gator-rate-sync': [31, `Step speed of the gator pattern, relative to the tempo. ${SYNC}`],
-  'gator-mode': [32, 'How the two 16-step pattern rows are combined: three mono modes and three stereo modes (row A left, row B right). Stereo modes need FX pan centred.'],
+  'gator-mode': [39, 'How the two 16-step rows (A = steps 1–16, B = steps 17–32) are played. Mono16: row A. MonoAlt1: A then B (32 steps). MonoAlt2: A, A, B, B. Stereo16: A left and B right at once. SterAlt1: A left + B right, then A right + B left. SterAlt2: like SterAlt1, each pair repeated. Stereo modes need FX pan centred.'],
   'gator-edge-slew': [31, 'Softens the gate edges: higher values fade each step in and out instead of hard cuts.'],
   'gator-hold': [31, 'How long the gate stays open on each step, independent of tempo.'],
   'gator-lr-delay': [31, 'Adds a stereo echo to each gated step: positive values delay it on the right; negative values create a pre-echo.'],
@@ -145,13 +158,22 @@ const help = {
   'arp-octaves': [15, 'Number of octaves the arpeggio spans. Each extra octave repeats the pattern an octave higher.'],
   'arp-rate-sync': [14, 'Note length of each arp step, relative to the tempo.'],
   'arp-gate': [14, 'Length of each arp note. 64 = half the step; maximum = notes join without gaps.'],
-  'arp-mode': [14, 'Order in which held notes are played (Up, Down, Up/Down, as played, random…).'],
+  'arp-mode': [39, 'Order of the held notes: Up (from the lowest), Down (from the highest), Up Down (alternating), Up Down 2 (same, playing the lowest and highest notes twice), Played (in the order you pressed them), Random, or Chord (all held notes together, rhythmically).'],
   'arp-pattern': [15, 'Ptn Edit = your own pattern of up to 8 steps (Length and Steps below). Other patterns are fixed rhythms from the UltraNova.'],
   'arp-swing': [15, 'Shifts every other step for a swung feel. Centre (50) = straight. Ptn Edit only.'],
   'arp-length': [15, 'Number of steps in the edited pattern. Ptn Edit only.'],
   'arp-step-N': [15, 'Whether this step of the edited pattern plays a note. Ptn Edit only.'],
 
   // Vocoder, Chorder, VocalTune
+  'vocoder-on': [33, 'Turns the vocoder on. It needs a modulator signal (mic or audio input) and notes played at the same time.'],
+  'vocoder-all-max': [33, 'Normal analyses the modulator for the classic talking-robot sound. AllMax skips the analysis and opens every band: the vocoder becomes a multi-band filter effect, great with Resonance, Shift and Spread.'],
+  'vocoder-input': [33, 'Modulator of the vocoder: the audio input, or the output of VocalTune.'],
+  'vocoder-freeze': [33, 'Freezes the current analysis of the modulator, so the vocoder keeps that formant (e.g. a sung vowel) without singing. The frozen formant is saved with the patch.'],
+  'vocoder-width': [33, 'Stereo width of the vocoder: bands alternate between left and right. 0 = mono, in the centre.'],
+  'vocoder-sibilance-type': [34, 'Where sibilance comes from: HighPass filters it from the voice; Noise adds noise to simulate it.'],
+  'vocoder-sibilance': [34, 'Amount of sibilance (S and T sounds) in the vocoded signal. More makes words clearer.'],
+  'vocoder-spec-shift': [33, 'Shifts the carrier bands up (positive) or down (negative) against the analysis bands, changing the formants.'],
+  'vocoder-spec-spread': [34, 'Stretches (positive) or shrinks (negative) the range of carrier bands against the analysis bands.'],
   'vocoder-level': [33, 'Level of the vocoded sound in the output mix. The vocoder imposes the spectrum of the mic (modulator) onto the synth sound (carrier); bright, saw-rich patches work best.'],
   'vocoder-carier-level': [33, 'Level of the plain synth sound (carrier) mixed with the vocoder output.'],
   'vocoder-modulator-level': [33, 'Level of the plain mic or input signal (modulator) mixed with the vocoder output.'],
@@ -209,6 +231,7 @@ export const helpFor = id => {
 
 // One-line introduction for each tab
 export const tabHelp = {
+  voice: [20, 'How notes are played: polyphonic or mono, unison voices to thicken the sound, portamento and pre-glide between notes, and the keyboard octave. Also the patch\'s type and genre.'],
   oscillators: [15, 'Three oscillators, a noise source and two ring modulators generate the raw sound; the mixer balances them before the filters.'],
   filters: [17, 'Two multi-mode filters, each with its own drive, shape the tone. Routing sets how they connect; Envelope 2 can sweep them.'],
   envelopes: [21, 'Six envelopes shape each note over time. Env 1 controls volume, Env 2 the filters, Envs 3–6 anything routed in the Mod Matrix.'],

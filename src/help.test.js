@@ -20,7 +20,7 @@ test('envelope help explains the role of the envelope', () => {
 });
 
 test('every tab has an introduction', () => {
-  for (const id of ['oscillators', 'filters', 'envelopes', 'lfos', 'effects', 'arp', 'vocoder', 'mod-matrix', 'tweaks']) {
+  for (const id of ['oscillators', 'filters', 'envelopes', 'lfos', 'effects', 'voice', 'arp', 'vocoder', 'mod-matrix', 'tweaks']) {
     expect(tabHelp[id]).toBeDefined();
   }
 });

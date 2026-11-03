@@ -19,7 +19,7 @@ function Oscillators({ emit }) {
       />
       <ControlGroup
         title="Mixer"
-        ids={['osc-1-level', 'osc-2-level', 'osc-3-level', 'ring-mod-level-1-3', 'ring-mod-level-2-3', 'noise-level', 'noise-type', 'pre-fx-level', 'post-fx-level']}
+        ids={['osc-1-level', 'osc-2-level', 'osc-3-level', 'ring-mod-level-1-3', 'ring-mod-level-2-3', 'noise-level', 'noise-type', 'pre-fx-level', 'post-fx-level', 'fx-wet-level']}
         emit={emit}
       />
     </div>

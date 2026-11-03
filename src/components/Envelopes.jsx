@@ -1,5 +1,6 @@
 import React from 'react';
 import Envelope from './Envelope';
+import ControlGroup from './ControlGroup';
 
 function Envelopes({ emit }) {
   return (
@@ -12,6 +13,7 @@ function Envelopes({ emit }) {
             number={i}
           />
         ))}
+        <ControlGroup title="Common" ids={['env-track-centre']} emit={emit} />
       </div>
     </div>
   );

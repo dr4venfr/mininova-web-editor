@@ -48,15 +48,15 @@ test('it can decode a NRPN message', () => {
 });
 
 test('it can decode a message that maps to different NRPN values', () => {
-  const tempoSetAt250 = {
+  const tempoSetAt240 = {
     type: CommandType.NRPN,
-    values: [2, 63, 1, 122],
+    values: [2, 63, 1, 112],
   };
 
-  const control = findControl(tempoSetAt250);
+  const control = findControl(tempoSetAt240);
 
   expect(control.id).toEqual('tempo');
-  expect(control.value).toEqual(250);
+  expect(control.value).toEqual(240);
 });
 
 test('it will not return a control when value is out of range', () => {

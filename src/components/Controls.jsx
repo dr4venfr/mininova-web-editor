@@ -7,6 +7,7 @@ import Filters from './Filters';
 import Envelopes from './Envelopes';
 import Lfos from './Lfos';
 import Effects from './Effects';
+import Voice from './Voice';
 import { Arp, Vocoder } from './ArpVocoder';
 import Modmatrix from './Modmatrix';
 import Tweaks from './Tweaks';
@@ -25,6 +26,7 @@ const tabs = [
   ['envelopes', 'Envelopes'],
   ['lfos', 'LFOs'],
   ['effects', 'Effects'],
+  ['voice', 'Voice'],
   ['arp', 'Arp'],
   ['vocoder', 'Vocoder'],
   ['mod-matrix', 'Mod Matrix'],
@@ -93,6 +95,7 @@ function Controls({ currentPatch, emit }) {
     envelopes: () => <Envelopes emit={emit} />,
     lfos: () => <Lfos emit={emit} />,
     effects: () => <Effects emit={emit} />,
+    voice: () => <Voice emit={emit} />,
     arp: () => (
       <div className="rows">
         <ControlGroup title="Performance" ids={[]} emit={emit}>

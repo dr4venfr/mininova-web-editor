@@ -15,6 +15,10 @@ const arp = [
 ]
  
 const vocoder = [
+'vocoder-on',
+'vocoder-all-max',
+'vocoder-input',
+'vocoder-freeze',
 'vocoder-level',
 'vocoder-carier-level',
 'vocoder-modulator-level',
@@ -22,6 +26,11 @@ const vocoder = [
 'vocoder-decay',
 'vocoder-gate-threshold',
 'vocoder-gate-release',
+'vocoder-width',
+'vocoder-sibilance-type',
+'vocoder-sibilance',
+'vocoder-spec-shift',
+'vocoder-spec-spread',
 'vocoder-spectrum-level-1',
 'vocoder-spectrum-level-2',
 'vocoder-spectrum-level-3',
